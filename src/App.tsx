@@ -1,12 +1,17 @@
 import React, { Component } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
+import { UserStoreConsumer } from './store/userStore'
 
 export class App extends Component {
   public render() {
     return (
-      <View style={styles.container}>
-        <Text>Open up 'src/App.tsx' to start!</Text>
-      </View>
+      <UserStoreConsumer>
+        {({ username }) => (
+          <View style={styles.container}>
+            <Text>Hi {username}, open up 'src/App.tsx' to start!</Text>
+          </View>
+        )}
+      </UserStoreConsumer>
     )
   }
 }
