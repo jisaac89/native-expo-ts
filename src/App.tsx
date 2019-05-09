@@ -6,36 +6,28 @@ import {
   Button
   // GestureResponderEvent
 } from 'react-native'
-import { AppProvider } from './store/appStore'
-import { MenuProvider } from './store/menuStore'
 import { CombinedConsumer } from './consumer/combinedConsumer'
+import { CombinedContextProvider } from './provider/combinedProvider'
 
 export class App extends Component {
   public render() {
     return (
-      <AppProvider>
-        <MenuProvider>
-          <CombinedConsumer
-            render={({
-              isNightMode,
-              toggleNightmode,
-              isMenuOpen,
-              toggleMenu
-            }) => (
-              <View style={styles.container}>
-                <Text onPress={toggleNightmode}>
-                  Nightmode: {isNightMode ? 'true' : 'false'}
-                </Text>
-                <Text onPress={toggleNightmode}>
-                  Menu: {isMenuOpen ? 'true' : 'false'}
-                </Text>
-                <Button title="Toggle Nighmode" onPress={toggleNightmode} />
-                <Button title="Toggle Menu" onPress={toggleMenu} />
-              </View>
-            )}
-          />
-        </MenuProvider>
-      </AppProvider>
+      <CombinedContextProvider>
+        <CombinedConsumer>
+          {({ isNightMode, toggleNightmode, isMenuOpen, toggleMenu }) => (
+            <View style={styles.container}>
+              <Text onPress={toggleNightmode}>
+                Nightmode: {isNightMode ? 'true' : 'false'}
+              </Text>
+              <Text onPress={toggleNightmode}>
+                Menu: {isMenuOpen ? 'true' : 'false'}
+              </Text>
+              <Button title="Toggle Nighmode" onPress={toggleNightmode} />
+              <Button title="Toggle Menu" onPress={toggleMenu} />
+            </View>
+          )}
+        </CombinedConsumer>
+      </CombinedContextProvider>
     )
   }
 }

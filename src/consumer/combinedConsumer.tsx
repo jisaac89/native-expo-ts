@@ -1,19 +1,18 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { AppStoreConsumer, IAppProviderState } from '../store/appStore'
 import { MenuStoreConsumer, IMenuProviderState } from '../store/menuStore'
 
-export class CombinedConsumer extends Component<{
-  render(renderProps: IAppProviderState & IMenuProviderState): JSX.Element
-}> {
-  public render() {
-    return (
-      <AppStoreConsumer>
-        {appState => (
-          <MenuStoreConsumer>
-            {menuState => this.props.render({ ...appState, ...menuState })}
-          </MenuStoreConsumer>
-        )}
-      </AppStoreConsumer>
-    )
-  }
+interface ICombinedConsumerProps {
+  children: (renderProps: IAppProviderState & IMenuProviderState) => JSX.Element
+}
+export const CombinedConsumer = ({ children }: ICombinedConsumerProps) => {
+  return (
+    <AppStoreConsumer>
+      {appState => (
+        <MenuStoreConsumer>
+          {menuState => children({ ...appState, ...menuState })}
+        </MenuStoreConsumer>
+      )}
+    </AppStoreConsumer>
+  )
 }
