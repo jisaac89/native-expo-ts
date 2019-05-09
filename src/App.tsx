@@ -3,26 +3,38 @@ import {
   StyleSheet,
   Text,
   View,
-  GestureResponderEvent,
   Button
+  // GestureResponderEvent
 } from 'react-native'
-import { AppStoreConsumer, AppProvider } from './store/appStore'
+import { AppProvider } from './store/appStore'
+import { MenuProvider } from './store/menuStore'
+import { CombinedConsumer } from './consumer/combinedConsumer'
 
 export class App extends Component {
   public render() {
     return (
       <AppProvider>
-        <AppStoreConsumer>
-          {({ nightmode, toggleNightmode }) => (
-            <View style={styles.container}>
-              <Text onPress={toggleNightmode}>
-                Hi {nightmode ? 'true' : 'false'}, open up 'src/App.tsx' to
-                start!
-              </Text>
-              <Button title="Press this" onPress={toggleNightmode} />
-            </View>
-          )}
-        </AppStoreConsumer>
+        <MenuProvider>
+          <CombinedConsumer
+            render={({
+              isNightMode,
+              toggleNightmode,
+              isMenuOpen,
+              toggleMenu
+            }) => (
+              <View style={styles.container}>
+                <Text onPress={toggleNightmode}>
+                  Nightmode: {isNightMode ? 'true' : 'false'}
+                </Text>
+                <Text onPress={toggleNightmode}>
+                  Menu: {isMenuOpen ? 'true' : 'false'}
+                </Text>
+                <Button title="Toggle Nighmode" onPress={toggleNightmode} />
+                <Button title="Toggle Menu" onPress={toggleMenu} />
+              </View>
+            )}
+          />
+        </MenuProvider>
       </AppProvider>
     )
   }

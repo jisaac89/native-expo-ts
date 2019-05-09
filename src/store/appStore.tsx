@@ -1,24 +1,24 @@
 import React, { createContext } from 'react'
 
 const appStore = {
-  nightmode: false,
+  isNightMode: false,
   toggleNightmode: () => {}
 }
 
-interface IAppProviderState {
-  nightmode: boolean
+export interface IAppProviderState {
+  isNightMode: boolean
   toggleNightmode: () => void
 }
 
 export class AppProvider extends React.Component<{}, IAppProviderState> {
   public toggleNightmode = () => {
     this.setState((state: IAppProviderState) => ({
-      nightmode: !state.nightmode
+      isNightMode: !state.isNightMode
     }))
   }
 
   public state = {
-    nightmode: true,
+    isNightMode: true,
     toggleNightmode: this.toggleNightmode
   }
 
