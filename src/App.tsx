@@ -1,17 +1,29 @@
 import React, { Component } from 'react'
-import { StyleSheet, Text, View } from 'react-native'
-import { UserStoreConsumer } from './store/userStore'
+import {
+  StyleSheet,
+  Text,
+  View,
+  GestureResponderEvent,
+  Button
+} from 'react-native'
+import { AppStoreConsumer, AppProvider } from './store/appStore'
 
 export class App extends Component {
   public render() {
     return (
-      <UserStoreConsumer>
-        {({ username }) => (
-          <View style={styles.container}>
-            <Text>Hi {username}, open up 'src/App.tsx' to start!</Text>
-          </View>
-        )}
-      </UserStoreConsumer>
+      <AppProvider>
+        <AppStoreConsumer>
+          {({ nightmode, toggleNightmode }) => (
+            <View style={styles.container}>
+              <Text onPress={toggleNightmode}>
+                Hi {nightmode ? 'true' : 'false'}, open up 'src/App.tsx' to
+                start!
+              </Text>
+              <Button title="Press this" onPress={toggleNightmode} />
+            </View>
+          )}
+        </AppStoreConsumer>
+      </AppProvider>
     )
   }
 }
